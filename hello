@@ -1,0 +1,24 @@
+import React from 'react';
+//import {View,Text} from 'react-native';
+import {StatusBar, SafeAreaView,Text} from 'react-native';
+import { ViewStyles,textStyles, ViewStyles, textStyles } from './styles';
+import Input from './components/Input';
+
+const App=()=>{
+    return(
+/*
+        <View style={ViewStyles.container}>
+            <Text style={textStyles.title}>TODO List</Text>
+        </View>
+*/
+//use <SafeAreaView> to make sure your components doesn't get cut out
+        <SafeAreaView style={ViewStyles.container}>
+            <StatusBar barStyle="light-content" style={textStyles.statusbar}></StatusBar>
+            <Text style={textStyles.title}>TODO List</Text>
+            //to put Input.js
+            <Input></Input>
+        </SafeAreaView>
+    )
+}
+
+export default App;
