@@ -22,3 +22,159 @@ const App=()=>{
 }
 
 export default App;
+
+------------------------------------------------------------------------------------------
+import React from 'react';
+import {StyleSheet, TextInput} from 'react-native';
+import {theme} from '../theme';
+
+const Input=()=>{
+    return(
+        <TextInput style={inputStyle.textInput}>
+            + add a task
+        </TextInput>
+    )
+}
+
+const inputStyle= StyleSheet.create({
+    textInput:{v 
+        fontSize:25,
+        width: Demensions.get('window').width-20,//to match size of screen
+        height:30,
+        marginTop:10,
+        marginLeft:3,
+        paddingLeft:15,
+        paddingTop:2,
+        borderRadius:10,
+        backgroundColor:theme.itemBackground,
+        color:theme.text
+    }
+})
+
+export default Input;
+------------------------------------------------------------------------------------------
+import {StyleSheet} from 'react-native';
+import {theme} from './theme';
+
+export const ViewStyles= StyleSheet.create({
+    container:{
+        flex:1,
+        backgroundColor:theme.background,
+        alignItems:'center',
+        justifyContent:'flex-start'
+    }
+})
+
+export const textStyles= StyleSheet.create({
+    title:{
+        fontSize:40,
+        fontWeight:'600',
+        color: theme.main,
+        alignItems:'flex-start',
+        marginTop:30, //title 잘림을 방지하기 위해서
+        marginLeft:0
+
+    }
+})
+
+//StatusBar Component
+export const barStyle= StyleSheet.create({
+    statusbar:{
+        backgroundColor: theme.background
+    }
+})
+------------------------------------------------------------------------------------------
+//type words
+//import EventInput from './components/EventInput'
+//change events
+import React, {useState} from 'react';
+import {View, Text, TextInput} from 'react-native';
+
+const EventInput=()=>{
+    const [text, setText]= useState('');
+    const _onChange= event => setText(event.nativeEvent.text);
+    const _onChangeText= text=>setText(text);
+
+    return(
+        <View>
+            <Text style={{margin:10,fontSize:30}}>Text:{text}</Text>
+            <TextInput 
+            style={{
+                borderWidth:1,
+                padding:10,
+                fontSize:20
+            }}
+            placeholder="enter a text..."
+            onChange={_onChange}
+            onChangeText={_onChangeText}>
+            </TextInput>
+        </View>
+    )
+}
+
+export default EventInput;
+------------------------------------------------------------------------------------------
+//import EventButton from './components/EventButton'
+//include the above code in App.js file
+import React from 'react';
+import {Pressable,Text} from 'react-native';
+
+const EventButton=()=>{
+    const _onPressIn=()=>console.log('PressIn'); //console.log==print
+    const _onPressOut=()=>console.log('PressOut');
+    const _onPress=()=>console.log('Press');
+    const _onLongPress=()=>console.log('LongPress');
+
+    return(
+        <Pressable style={{
+            backgroundColor:'#f1c40f',
+            padding:16,
+            margin:10,
+            borderRadius:8
+        }}
+
+        onPressIn={_onPressIn}
+        onPressOut={_onPressOut}
+        onPress={_onPress}
+        onLongPress={_onLongPress}
+        //how long user should wait for
+        delayLongPress={3000} //wait for 3 seconds
+        >
+            <Text style={{color:'white',fontSize:24}}>Press</Text>
+        </Pressable>
+    )
+}
+
+export default EventButton;
+------------------------------------------------------------------------------------------
+//express multistates
+import React, { useState } from 'react';
+import {Text,View} from 'react-native';
+import MyButton from './MyButton';
+
+const Counter=()=>{
+    const [count,setCount]= useState(0);
+    const [double,setDouble]=useState(0);
+
+    return(
+        <View style={{alignItems:'center'}}>
+            <Text style={{fontSize:30,margin:10}}>count: {count}</Text>
+            <Text style={{fontSize:30,margin:10}}>double: {double}</Text>
+
+            <MyButton title="+" onPress={()=>{
+                setCount(count+1);
+                setDouble(double+2);
+            }
+            }></MyButton>
+            
+            <MyButton title="-" onPress={()=>{
+                setCount(count-1);
+                setDouble(double-2);
+            }
+            }></MyButton>
+
+        </View>
+    )
+}
+export default Counter;
+------------------------------------------------------------------------------------------
