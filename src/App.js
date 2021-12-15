@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
-import {StatusBar,SafeAreaView, Text} from 'react-native';
+import {StatusBar,SafeAreaView, Text,Dimensions,View} from 'react-native';
 import {viewStyles, textStyles} from './styles';
 import Input from './components/Input';
 import {images} from './images';
 import IconButton from './components/IconButton';
+import Task from './components/Task';
 
 
 export default function App(){
+
+    const width= Dimensions.get('window').width;
 
     const [newTask, setNewTask]= useState('');
 
@@ -25,10 +28,10 @@ export default function App(){
             <Text style={textStyles.title}>TODO LIST</Text> 
             <Input value={newTask} onChangeText={_handleTextChange} onSubmitEditing={_addTask}/>
 
-            <IconButton type={images.uncompleted}/>
-            <IconButton type={images.completed}/>
-            <IconButton type={images.delete}/>
-            <IconButton type={images.update}/>
+            <View width= {width -20}>
+                <Task text="Todo item #1"/>
+                <Task text="Todo item #2"/>
+            </View>
         </SafeAreaView>
     );
 }
