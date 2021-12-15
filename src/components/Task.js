@@ -5,13 +5,13 @@ import propTypes from 'prop-types';
 import IconButton from './IconButton';
 import {images} from '../images';
 
-const Task=( {text} ) =>{
+const Task=( {item, deleteTask} ) =>{
     return(
         <View style={taskStyle.container}>
             <IconButton type={images.uncompleted}/>
-            <Text style={taskStyle.contents}>{text}</Text>
+            <Text style={taskStyle.contents}>{item.text}</Text>
             <IconButton type={images.update}/>
-            <IconButton type={images.delete}/>
+            <IconButton type={images.delete} id={item.id} onPressOut={deleteTask}/>
         </View>
     )
 }
@@ -35,7 +35,8 @@ const taskStyle= StyleSheet.create({
 });
 
 Task.propTypes={
-    text:propTypes.string.isRequired,
+    item:propTypes.object.isRequired,
+    deleteTask:propTypes.func.isRequired,
 };
 
 export default Task;

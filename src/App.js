@@ -27,6 +27,12 @@ export default function App(){
         setTasks({...tasks,...newTaskObject});
     };
 
+    const _deleteTask = id => {
+        const currentTasks=Object.assign({},tasks);
+        delete currentTasks[id];
+        setTasks(currentTasks);
+    }
+
     const _handleTextChange = text => {
         setNewTask(text);
     };
@@ -39,7 +45,7 @@ export default function App(){
 
             <ScrollView width= {width-20}>
                 {Object.values(tasks).reverse().map( item=> (
-                <Task key={item.id} text={item.text}/>
+                <Task key={item.id} item={item} deleteTask={_deleteTask}/>
                 ))}
             </ScrollView>
 
