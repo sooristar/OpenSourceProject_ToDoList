@@ -1,15 +1,27 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import {SafeAreaView, Text} from 'react-native';
+import React, { useState } from 'react';
+import {StatusBar,SafeAreaView, Text} from 'react-native';
 import {viewStyles, textStyles} from './styles';
+import Input from './components/Input';
 
-const App= () =>{
-    return(
+
+export default function App(){
+
+    const [newTask, setNewTask]= useState('');
+
+    const _addTask = () => {
+        alert(`Add: ${newTask}`);
+        setNewTask('');
+    };
+
+    const _handleTextChange = text => {
+        setNewTask(text);
+    };
+
+    return (
         <SafeAreaView style={viewStyles.container}>
-            <StatusBar barStyle="light-content" style={textStyles.StatusBar}/>
-            <Text style={textStyles.title}> TODO LIST </Text>
+            <StatusBar barStyle='light-content' style={textStyles.StatusBar}/>
+            <Text style={textStyles.title}>TODO LIST</Text> 
+            <Input value={newTask} onChangeText={_handleTextChange} onSubmitEditing={_addTask}/>
         </SafeAreaView>
     );
-};
-
-export default App;
+}
