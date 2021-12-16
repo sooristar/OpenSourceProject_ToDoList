@@ -39,6 +39,16 @@ export default function App(){
         setTasks(currentTasks);
     }
 
+    const _updateTask= item =>{
+        const currentTasks= Object.assign({},tasks);
+        currentTasks[item.id]=item;
+        setTasks(currentTasks);
+    };
+
+    const _onBlur=()=>{
+        setNewTask('');
+    };
+
     const _handleTextChange = text => {
         setNewTask(text);
     };
@@ -47,11 +57,12 @@ export default function App(){
         <SafeAreaView style={viewStyles.container}>
             <StatusBar barStyle='light-content' style={textStyles.StatusBar}/>
             <Text style={textStyles.title}>TODO LIST</Text> 
-            <Input value={newTask} onChangeText={_handleTextChange} onSubmitEditing={_addTask}/>
+            <Input value={newTask} onChangeText={_handleTextChange} onSubmitEditing={_addTask} onBlur={_onBlur}/>
 
             <ScrollView width= {width-20}>
                 {Object.values(tasks).reverse().map( item=> (
-                <Task key={item.id} item={item} deleteTask={_deleteTask} toggleTask={_toggleTask}/>
+                <Task key={item.id} item={item} deleteTask={_deleteTask} toggleTask={_toggleTask}
+                updateTask={_updateTask}/>
                 ))}
             </ScrollView>
 
