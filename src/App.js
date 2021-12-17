@@ -5,6 +5,7 @@ import Input from './components/Input';
 import {images} from './images';
 import IconButton from './components/IconButton';
 import Task from './components/Task';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 export default function App(){
@@ -13,9 +14,24 @@ export default function App(){
     const [newTask, setNewTask]= useState('');
 
     const [tasks, setTasks]= useState({
-        '1':{id:'1',text:"Todo item #1",completed: false},
-        '2':{id:'2',text:"Todo item #2",completed: true},
+        //'1':{id:'1',text:"Todo item #1",completed: false},
+        //'2':{id:'2',text:"Todo item #2",completed: true},
     });
+
+    const _saveTasks= async tasks=>{
+        try{
+            await AsyncStorage.setItem('tasks',JSON.stringify(tasks));
+            setTasks(tasks);
+        }
+        catch(e){
+            console.error(e);
+        }
+    };
+
+    const _loadTasks= async() =>{
+        const loadedTasks= await AsyncStorage.getItem('tasks');
+        setTasks(JSON.parse(loadedTasks||'{}'));
+    };
 
     const _addTask = () => {
         alert(`Add: ${newTask}`);
@@ -24,25 +40,29 @@ export default function App(){
             [ID]: {id: ID, text:newTask, completed:false},
         };
         setNewTask('');
-        setTasks({...tasks,...newTaskObject});
+        //setTasks({...tasks,...newTaskObject});
+        _saveTasks({...tasks,...newTaskObject});
     };
 
     const _deleteTask = id => {
         const currentTasks=Object.assign({},tasks);
         delete currentTasks[id];
-        setTasks(currentTasks);
+        //setTasks(currentTasks);
+        _saveTasks(currentTasks);
     }
 
     const _toggleTask = id => {
         const currentTasks= Object.assign({},tasks);
         currentTasks[id]['completed'] = !currentTasks[id]['completed'];
-        setTasks(currentTasks);
+        //setTasks(currentTasks);
+        _saveTasks(currentTasks);
     }
 
     const _updateTask= item =>{
         const currentTasks= Object.assign({},tasks);
         currentTasks[item.id]=item;
-        setTasks(currentTasks);
+        //setTasks(currentTasks);
+        _saveTasks(currentTasks);
     };
 
     const _onBlur=()=>{
