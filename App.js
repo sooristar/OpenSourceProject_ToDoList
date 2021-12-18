@@ -15,6 +15,7 @@ function HomeScreen({navigation,route}){
       <Text>Home Screen</Text>
       <Button title="Go to Details" onPress={()=>{navigation.navigate('Details', {itemId:86,otherParam:'anything you want here'})}}/>
       <Button title='Create Post' onPress={()=>navigation.navigate('CreatePost')}/>
+      <Button title='Go to Profile' onPress={()=>navigation.navigate('Profile',{name: 'Custom profile header!'})}/>
       <Text style={{margin:10}}>Post: {route.params?.post}</Text>
     </View>
   );
@@ -46,7 +47,7 @@ function CreatePostScreen({navigation,route}){
   return(
     <>
     
-    <TextInput multiline placeholder="what's on your mind>"
+    <TextInput multiline placeholder="Input title of your plan>"
     style={{height:200,padding:10,backgroundColor:'white'}}
     value={postText}
     onChangeText={setPostText}/>
@@ -63,6 +64,15 @@ function CreatePostScreen({navigation,route}){
   );
 };
 
+function ProfileScreen({navigation}){
+  return(
+    <View style={{flex:1, alignItems:'center', justifyContent:'center'}}>
+      <Text>Profile screen</Text>
+      <Button title="Go back" onPress={()=> navigation.goBack()}/>
+    </View>
+  )
+}
+
 const Stack= createNativeStackNavigator();
 
 function App(){
@@ -72,6 +82,7 @@ function App(){
         <Stack.Screen name="Home" component={HomeScreen} options={{title:'Overview'}}/>
         <Stack.Screen name="Details" component={DetailsScreen} initialParams={{itemId:42}}/>
         <Stack.Screen name="CreatePost" component={CreatePostScreen}/>
+        <Stack.Screen name="Profile" component={ProfileScreen} options={({route})=>({title: route.params.name})}/>
       </Stack.Navigator>
     </NavigationContainer>
   )
